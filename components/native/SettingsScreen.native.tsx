@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
-import { LogOut } from 'lucide-react-native';
 import { settingsService } from '../../services/api';
 import { Card, ScreenShell, sharedStyles } from './shared';
-
-const LogOutIcon = LogOut as React.ComponentType<{ size?: number; color?: string }>;
 
 export default function SettingsScreen({ onLogout }: { onLogout: () => Promise<void> | void }) {
   const [settings, setSettings] = useState<any>(null);
@@ -18,7 +15,7 @@ export default function SettingsScreen({ onLogout }: { onLogout: () => Promise<v
       title="Configurações"
       action={
         <Pressable onPress={onLogout} style={sharedStyles.iconButton}>
-          <LogOutIcon size={18} color="#334155" />
+          <Text style={{ color: '#334155', fontWeight: '700' }}>Sair</Text>
         </Pressable>
       }
     >

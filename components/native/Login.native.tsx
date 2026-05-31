@@ -11,15 +11,10 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import { LogIn, Eye, EyeOff, UserPlus } from 'lucide-react-native';
 import { authService } from '../../services/api';
 
 const DEMO_EMAIL = 'admin@admin.com';
 const DEMO_PASSWORD = 'admin';
-const LoginIcon = LogIn as React.ComponentType<{ size?: number; color?: string }>;
-const EyeIcon = Eye as React.ComponentType<{ size?: number; color?: string }>;
-const EyeOffIcon = EyeOff as React.ComponentType<{ size?: number; color?: string }>;
-const UserPlusIcon = UserPlus as React.ComponentType<{ size?: number; color?: string }>;
 
 interface LoginProps {
   onLogin: () => void;
@@ -99,10 +94,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             {/* Header / Logo */}
             <View style={styles.header}>
               <View style={styles.iconContainer}>
-                {isRegisterMode
-                  ? <UserPlusIcon size={32} color="#fff" />
-                  : <LoginIcon size={32} color="#fff" />
-                }
+                <Text style={styles.iconText}>{isRegisterMode ? '+' : '>'}</Text>
               </View>
               <Text style={styles.title}>Sistema de Gestão</Text>
               <Text style={styles.subtitle}>
@@ -169,10 +161,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   onPress={() => setShowPassword((v) => !v)}
                   activeOpacity={0.7}
                 >
-                  {showPassword
-                    ? <EyeOffIcon size={20} color="#9ca3af" />
-                    : <EyeIcon size={20} color="#9ca3af" />
-                  }
+                  <Text style={styles.eyeButtonText}>{showPassword ? 'Ocultar' : 'Ver'}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -197,10 +186,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     onPress={() => setShowConfirmPassword((v) => !v)}
                     activeOpacity={0.7}
                   >
-                    {showConfirmPassword
-                      ? <EyeOffIcon size={20} color="#9ca3af" />
-                      : <EyeIcon size={20} color="#9ca3af" />
-                    }
+                    <Text style={styles.eyeButtonText}>{showConfirmPassword ? 'Ocultar' : 'Ver'}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -222,10 +208,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 </>
               ) : (
                 <>
-                  {isRegisterMode
-                    ? <UserPlusIcon size={20} color="#fff" />
-                    : <LoginIcon size={20} color="#fff" />
-                  }
+                  <Text style={styles.submitIcon}>{isRegisterMode ? '+' : '>'}</Text>
                   <Text style={styles.submitButtonText}>
                     {isRegisterMode ? 'Criar Conta' : 'Entrar'}
                   </Text>
@@ -306,6 +289,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 16,
   },
+  iconText: {
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: '800',
+    lineHeight: 36,
+  },
   title: {
     fontSize: 26,
     fontWeight: '700',
@@ -362,8 +351,13 @@ const styles = StyleSheet.create({
   },
   eyeButton: {
     position: 'absolute',
-    right: 12,
+    right: 10,
     padding: 4,
+  },
+  eyeButtonText: {
+    color: '#6b7280',
+    fontSize: 12,
+    fontWeight: '600',
   },
 
   // Botão submit
@@ -379,6 +373,12 @@ const styles = StyleSheet.create({
   },
   submitButtonDisabled: {
     backgroundColor: '#93c5fd',
+  },
+  submitIcon: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '800',
+    lineHeight: 20,
   },
   submitButtonText: {
     color: '#fff',
