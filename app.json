@@ -9,10 +9,15 @@
     "splash": {
       "backgroundColor": "#f5f7fb"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
-    "android": {}
+    "android": {},
+    "plugins": [
+      "expo-asset"
+    ]
   }
 }
