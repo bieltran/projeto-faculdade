@@ -55,7 +55,15 @@ const normalizeError = (error: unknown) => {
 api.interceptors.request.use(async (config) => {
   const token = await getStoredToken();
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    const authorization = `Bearer ${token}`;
+    if (config.headers && typeof (config.headers as any).set === 'function') {
+      (config.headers as any).set('Authorization', authorization);
+    } else {
+      config.headers = {
+        ...(config.headers || {}),
+        Authorization: authorization,
+      } as any;
+    }
   }
   return config;
 });
@@ -95,7 +103,16 @@ export const authService = {
 
 export const clientService = {
   getAll: async () => (await api.get('/clients')).data,
-  create: async (data: any) => (await api.post('/clients', data)).data,
+  create: async (data: any) => {
+    const token = await getStoredToken();
+    if (!token) {
+      throw new Error('Sessao expirada. Faca login novamente.');
+    }
+
+    return (await api.post('/clients', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    })).data;
+  },
   update: async (id: string, data: any) => (await api.put(`/clients/${id}`, data)).data,
   delete: async (id: string) => (await api.delete(`/clients/${id}`)).data,
 };
